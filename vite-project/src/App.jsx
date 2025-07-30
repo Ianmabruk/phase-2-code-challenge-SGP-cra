@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useEffect, useState } from "react";
 import AddGoal from "./components/AddGoal.jsx";
 import Deposit from "./components/Deposit.jsx";
@@ -8,7 +9,7 @@ import "./App.css";
 function App() {
   const [goals, setGoals] = useState([]);
 
-  //This should be able to Fetch all goals from json-server
+  // Fetch all goals from json-server
   const fetchGoals = () => {
     fetch("http://localhost:3000/goals")
       .then((res) => res.json())
@@ -20,7 +21,7 @@ function App() {
     fetchGoals();
   }, []);
 
-  //This is supposed to Add new goal
+  // Add new goal
   const addGoal = (goal) => {
     fetch("http://localhost:3000/goals", {
       method: "POST",
@@ -31,7 +32,7 @@ function App() {
       .then(() => fetchGoals());
   };
 
-  // This should Update goal (edit or deposit)
+  // Update goal (edit or deposit)
   const updateGoal = (updatedGoal) => {
     fetch(`http://localhost:3000/goals/${updatedGoal.id}`, {
       method: "PATCH",
@@ -42,23 +43,23 @@ function App() {
       .then(() => fetchGoals());
   };
 
-  // This should Delete goal
+  // Delete goal
   const deleteGoal = (id) => {
     fetch(`http://localhost:3000/goals/${id}`, {
       method: "DELETE",
     }).then(() => fetchGoals());
   };
 
-  // Enables Handle deposit
+  // Make a deposit
   const makeDeposit = (goalId, amount) => {
-    const numericGoalId = Number(goalId); // ✅ Convert goalId to number
+    const numericGoalId = Number(goalId);
     const goal = goals.find((g) => g.id === numericGoalId);
     if (!goal) {
       console.error("Goal not found for deposit:", goalId);
       return;
     }
 
-    const newSavedAmount = goal.savedAmount + parseInt(amount);
+    const newSavedAmount = goal.savedAmount + parseFloat(amount);
 
     fetch(`http://localhost:3000/goals/${numericGoalId}`, {
       method: "PATCH",
@@ -72,7 +73,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Smart Goal Planner</h1>
+      <h1>🎯 Smart Goal Planner</h1>
       <AddGoal onAdd={addGoal} />
       <Deposit goals={goals} onDeposit={makeDeposit} />
       <Dashboard goals={goals} />

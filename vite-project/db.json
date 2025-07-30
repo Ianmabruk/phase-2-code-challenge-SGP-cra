@@ -104,6 +104,14 @@
       "deadline": "2025-07-09",
       "savedAmount": 0,
       "id": "dh4jv3q"
+    },
+    {
+      "id": "37dd",
+      "name": "investment",
+      "targetAmount": 3000,
+      "category": "Emergency",
+      "deadline": "2025-07-31",
+      "savedAmount": 0
     }
   ]
 }

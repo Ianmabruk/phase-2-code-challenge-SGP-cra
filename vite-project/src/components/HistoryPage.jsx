@@ -1,43 +1,38 @@
 import React from "react";
 import GoalItem from "./GoalItem";
 
-function HistoryPage({ goals }) {
-  const today = new Date();
-
-  const isCompleted = (goal) => goal.savedAmount >= goal.targetAmount;
-  const isOverdue = (goal) =>
-    new Date(goal.deadline) < today && !isCompleted(goal);
-
-  const completedGoals = goals.filter(isCompleted);
-  const overdueGoals = goals.filter(isOverdue);
-
+function GoalHistory({ goals }) {
   return (
-    <div className="p-6">
-      <h1> Goal History</h1>
-
-      <section>
-        <h2>Completed Goals</h2>
-        {completedGoals.length > 0 ? (
-          completedGoals.map((goal) => (
-            <GoalItem key={goal.id} goal={goal} />
-          ))
-        ) : (
-          <p>No completed goals yet.</p>
-        )}
-      </section>
-
-      <section>
-        <h2> Overdue Goals</h2>
-        {overdueGoals.length > 0 ? (
-          overdueGoals.map((goal) => (
-            <GoalItem key={goal.id} goal={goal} />
-          ))
-        ) : (
-          <p>No overdue goals!</p>
-        )}
-      </section>
+    <div className="card">
+      <h2>Goal History</h2>
+      {goals.length === 0 ? (
+        <p>No goals have been added yet.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Target</th>
+              <th>Saved</th>
+              <th>Deadline</th>
+            </tr>
+          </thead>
+          <tbody>
+            {goals.map((goal) => (
+              <tr key={goal.id}>
+                <td>{goal.name}</td>
+                <td>{goal.category}</td>
+                <td>${goal.targetAmount}</td>
+                <td>${goal.savedAmount}</td>
+                <td>{goal.deadline}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
 
-export default HistoryPage;
+export default GoalHistory;

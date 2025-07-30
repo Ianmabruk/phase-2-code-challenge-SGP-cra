@@ -10,13 +10,17 @@ function AddGoal({ onAdd }) {
     e.preventDefault();
     if (!name || !targetAmount || !deadline) return;
 
-    onAdd({
+    const newGoal = {
       name,
       targetAmount: parseFloat(targetAmount),
       category,
-      deadline,
-    });
+      deadline
+    };
 
+    // Call parent handler
+    onAdd(newGoal);
+
+    // Reset form
     setName("");
     setTargetAmount("");
     setCategory("Savings");
